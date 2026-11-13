@@ -61,7 +61,7 @@ def user_processing():
             )
 
     @task
-    def store_user():
+    def save_user():
         hook = PostgresHook(postgres_conn_id="postgres")
         conn = hook.get_conn()
         try:
@@ -84,4 +84,7 @@ def user_processing():
     user_info = extract_user(fake_user)
     processed = process_user(user_info)
     create_table >> fake_user
-    processed >> store_user()
+    processed >> save_user()
+
+
+user_processing()
