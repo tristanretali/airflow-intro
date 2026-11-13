@@ -1,6 +1,7 @@
 from airflow.sdk import dag, task
 from airflow.sdk.bases.sensor import PokeReturnValue
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
+from airflow.providers.postgres.hooks.postgres import PostgresHook
 
 API_URL = "https://raw.githubusercontent.com/FatimaMoqran/airflow-datasets/refs/heads/main/fakeuser.json"
 
@@ -84,6 +85,3 @@ def user_processing():
     processed = process_user(user_info)
     create_table >> fake_user
     processed >> store_user()
-
-
-user_processing()
